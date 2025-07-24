@@ -1,0 +1,344 @@
+/* --- 1. CSS Variables & Global Styles --- */
+:root {
+    /* The "Triple Black" Adidas Vibe Palette */
+    --bg-main: #111111;
+    --bg-card: #1a1a1a;
+    --color-text: #f5f5f5;
+    --color-subtle: #888888;
+    --color-brand: #ffffff; /* The clean, iconic white */
+    --border-color: #333333;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --glow-color: rgba(255, 255, 255, 0.05);
+
+    /* Sick transition for that premium feel */
+    --swoosh: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --radius: 20px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--color-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* --- 2. Animations & Card Layout --- */
+@keyframes card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    max-width: 600px;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: transform 0.4s var(--swoosh), box-shadow 0.4s var(--swoosh);
+    animation: card-enter 0.8s var(--swoosh) forwards;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px var(--shadow-color);
+}
+
+/* --- 3. Card Header & Profile --- */
+.card-header {
+    background-color: transparent;
+    padding: 2.5rem 2rem 1.5rem;
+    text-align: center;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--bg-card);
+    box-shadow: 0 0 0 4px var(--color-brand);
+    margin-bottom: 1rem;
+    transition: transform 0.4s var(--swoosh), box-shadow 0.4s var(--swoosh);
+}
+
+.card:hover .profile-img {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px var(--bg-card), 0 0 30px 5px var(--glow-color); /* Dope glow effect */
+}
+
+.card-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.job-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-subtle);
+    /* Set up for the hover transition */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s var(--swoosh), transform 0.5s var(--swoosh);
+}
+
+/* Make it appear on card hover */
+.card:hover .job-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s; /* << The magic delay */
+}
+
+
+/* --- 4. Card Body Content --- */
+.card-body {
+    padding: 1.5rem 2rem 2rem;
+}
+
+/* This whole section will fade in after the title */
+.about-me, .skills, .contact-section {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s var(--swoosh) 0.2s, transform 0.5s var(--swoosh) 0.2s;
+}
+
+.card:hover .about-me,
+.card:hover .skills,
+.card:hover .contact-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-body h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-subtle);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.card-body h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--swoosh);
+}
+
+/* Animate the underline with a delay */
+.card:hover .card-body h2::after {
+    transform: scaleX(1);
+    transition-delay: 0.3s;
+}
+
+.about-me p {
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+/* --- 5. Skills & Button Section --- */
+.skills {
+    margin-top: 2rem;
+    transition-delay: 0.4s; /* Override for later entry */
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+}
+
+/* Stagger the skill tags in on hover */
+.skill-tag {
+    background-color: var(--border-color);
+    color: var(--color-subtle);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.3s var(--swoosh);
+}
+
+.card:hover .skill-tag {
+    transform: scale(1);
+    opacity: 1;
+    color: var(--color-text);
+}
+
+/* This is the key: each tag gets its own delay */
+.card:hover .skills-list li:nth-child(1) .skill-tag { transition-delay: 0.5s; }
+.card:hover .skills-list li:nth-child(2) .skill-tag { transition-delay: 0.55s; }
+.card:hover .skills-list li:nth-child(3) .skill-tag { transition-delay: 0.6s; }
+.card:hover .skills-list li:nth-child(4) .skill-tag { transition-delay: 0.65s; }
+.card:hover .skills-list li:nth-child(5) .skill-tag { transition-delay: 0.7s; }
+/* Add more if you need 'em */
+
+.skill-tag:hover {
+    background-color: var(--color-brand);
+    color: var(--bg-main) !important; /* Override hover color */
+    transform: scale(1.1) !important; /* Pop it out */
+}
+
+.contact-section {
+    text-align: center;
+    margin-top: 2.5rem;
+    transition-delay: 0.8s; /* Final element to animate in */
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--color-brand);
+    color: var(--bg-main);
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.85rem 2.5rem;
+    border-radius: 999px;
+    transition: all 0.3s var(--swoosh);
+}
+
+.cta-button:hover {
+    background-color: var(--color-text);
+    transform: scale(1.05);
+}
+
+
+/* --- 6. Responsive Design for Mobile --- */
+@media (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .card-header {
+        padding: 2rem 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .card-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* --- 7. Contact Modal (Added Section) --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s var(--swoosh);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 20px 40px var(--shadow-color);
+    animation: slideIn 0.5s var(--swoosh);
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.modal-content h2::after {
+    display: none; /* Don't need the underline here */
+}
+
+.contact-info p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--color-subtle);
+    text-align: center;
+}
+
+.contact-info a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.3s;
+    word-break: break-all; /* Prevents overflow on small screens */
+}
+
+.contact-info a:hover {
+    color: var(--color-brand);
+    text-decoration: underline;
+}
+
+.close-btn {
+    color: var(--color-subtle);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--color-text);
+    text-decoration: none;
+    cursor: pointer;
+}

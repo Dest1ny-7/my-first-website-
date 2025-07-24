@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Olanrewaju Destiny | Web Developer</title>
+</head>
+<body>
+    <div class="card">
+        <header class="card-header">
+            <img src="profile.jpg" alt="Profile picture of Olanrewaju Destiny" class="profile-img">
+            <h1>Olanrewaju Destiny</h1>
+            <p class="job-title">Junior Web Developer</p>
+        </header>
+        <main class="card-body">
+            <section class="about-me">
+                <h2>About Me</h2>
+                <p>I recently started learning HTML and CSS, so I wanted to put what I have learned into practice. My goal is to build super cool and responsive websites. 🚀</p>
+            </section>
+            
+            <section class="skills">
+                <h2>Skills</h2>
+                <ul class="skills-list">
+                    <li class="skill-tag">HTML</li>
+                    <li class="skill-tag">CSS</li>
+                    <li class="skill-tag">Responsive Design</li>
+                </ul>
+            </section>
+            
+            <section class="contact-section">
+                <a href="#" id="contactBtn" class="cta-button">Contact Me</a>
+            </section>
+        </main>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Contact Information</h2>
+            <div class="contact-info">
+                <p>📧 Email: <a href="mailto:gamerd.jack777@gmail.com">gamerd.jack777@gmail.com</a></p>
+                <p>📱 Phone: <a href="tel:+2349073081822">+234 907 308 1822</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get the modal element
+        var modal = document.getElementById("contactModal");
+        
+        // Get the button that opens the modal
+        var btn = document.getElementById("contactBtn");
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close-btn")[0];
+        
+        // When the user clicks the button, open the modal
+        btn.onclick = function(event) {
+          event.preventDefault(); // Prevents the link from navigating
+          modal.style.display = "flex";
+        }
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+</body>
+</html>
